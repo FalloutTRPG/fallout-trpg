@@ -11,46 +11,67 @@
             color: #00ee00;
             margin: 0;
             padding: 0;
-        }
-        .menu {
-            width: 20%;
-            float: left;
-            border-right: 1px solid #00ee00;
-            padding: 10px;
-            box-sizing: border-box;
+            display: flex;
             height: 100vh;
         }
+
+        .menu {
+            width: 25%;
+            border-right: 1px solid #00ee00;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
         .content {
-            width: 80%;
-            float: left;
-            padding: 10px;
+            flex: 1;
+            padding: 20px;
             box-sizing: border-box;
         }
-        .menu a {
-            color: #00ee00;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 10px;
+
+        h1 {
+            font-size: 24px;
+            margin: 0 0 20px 0;
         }
-        .menu a:hover {
-            text-decoration: underline;
-        }
+
         .button {
             display: block;
-            margin: 10px 0;
+            width: 100%;
             padding: 10px;
+            margin-bottom: 10px;
             background-color: transparent;
             color: #00ee00;
             border: 1px solid #00ee00;
             text-align: center;
             cursor: pointer;
         }
+
         .button:hover {
             background-color: #00ee00;
             color: #000000;
         }
-        .hidden {
-            display: none;
+
+        a {
+            color: #00ee00;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #game-list {
+            margin-top: 20px;
+        }
+
+        #room-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        #room-description {
+            font-size: 16px;
         }
     </style>
 </head>
@@ -63,16 +84,8 @@
         </div>
     </div>
     <div class="content">
-        <img src="https://via.placeholder.com/800x400" alt="Popis obrázku místnosti" id="room-image" style="width: 100%; height: auto;" />
-        <p id="room-description">Místnost: <span id="room-name">N/A</span>. Popis: <span id="room-desc">Zde je popis místnosti.</span></p>
-        <div id="chat-section" class="hidden">
-            <div id="chat-messages">
-                <p>Chat zprávy se zobrazí zde...</p>
-            </div>
-            <textarea id="chat-input" placeholder="Napište zprávu..."></textarea>
-            <button onclick="sendMessage()">Odeslat</button>
-            <button onclick="inviteAI()">Přizvat AI vypravěče</button>
-        </div>
+        <img src="https://via.placeholder.com/800x400" alt="Popis obrázku místnosti" id="room-image" />
+        <p id="room-description">Místnost: N/A. Popis: Zde je popis místnosti.</p>
     </div>
 
     <script>
@@ -89,25 +102,8 @@
         }
 
         function enterGame(gameName) {
-            document.getElementById("room-name").textContent = gameName;
-            document.getElementById("room-desc").textContent = "Popis pro hru: " + gameName;
-            document.getElementById("chat-section").classList.remove("hidden");
-        }
-
-        function sendMessage() {
-            const input = document.getElementById("chat-input");
-            const message = input.value.trim();
-            if (message) {
-                const chatMessages = document.getElementById("chat-messages");
-                const newMessage = document.createElement("p");
-                newMessage.textContent = message;
-                chatMessages.appendChild(newMessage);
-                input.value = "";
-            }
-        }
-
-        function inviteAI() {
-            alert("AI vypravěč bude přidán později!");
+            alert("Vstupujete do hry: " + gameName);
+            // Přesměrování nebo načtení herní místnosti...
         }
     </script>
 </body>
