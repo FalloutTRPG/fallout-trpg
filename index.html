@@ -43,6 +43,9 @@
             background-color: #00ee00;
             color: #000000;
         }
+        .hidden {
+            display: none;
+        }
         .message {
             margin: 10px 0;
             padding: 10px;
@@ -84,23 +87,36 @@
     </style>
 </head>
 <body>
-    <div class="menu">
-        <h1>Fallout TRPG</h1>
-        <a href="#" onclick="createNewGame()">Vytvořit novou hru</a>
-        <div id="game-list">
-            <p>Momentálně nejsou k dispozici žádné hry.</p>
+    <div id="main-page">
+        <div class="menu">
+            <h1>Fallout TRPG</h1>
+            <a href="#" onclick="createNewGame()">Vytvořit novou hru</a>
+            <div id="game-list">
+                <p>Momentálně nejsou k dispozici žádné hry.</p>
+            </div>
+        </div>
+        <div class="content">
+            <img src="https://via.placeholder.com/800x400" alt="Popis obrázku místnosti" id="room-image" style="width: 100%; height: auto;" />
+            <p id="room-description">Zde bude popis místnosti...</p>
         </div>
     </div>
-    <div class="content">
-        <div id="messages"></div>
-    </div>
-    <div class="input-area">
-        <input type="text" id="username" placeholder="Zadejte jméno postavy">
-        <textarea id="message" placeholder="Napište zprávu..."></textarea>
-        <button onclick="sendMessage()">Odeslat</button>
-        <button onclick="summonAI()">Přizvat AI vypravěče</button>
+    <div id="game-room" class="hidden">
+        <div class="menu">
+            <a href="#" onclick="returnToMain()">Zpět</a>
+        </div>
+        <div class="content">
+            <div id="messages"></div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="username" placeholder="Zadejte jméno postavy">
+            <textarea id="message" placeholder="Napište zprávu..."></textarea>
+            <button onclick="sendMessage()">Odeslat</button>
+            <button onclick="summonAI()">Přizvat AI vypravěče</button>
+        </div>
     </div>
     <script>
+        const mainPage = document.getElementById("main-page");
+        const gameRoom = document.getElementById("game-room");
         const messagesDiv = document.getElementById("messages");
         const usernameInput = document.getElementById("username");
         const messageInput = document.getElementById("message");
@@ -118,8 +134,14 @@
         }
 
         function enterGame(gameName) {
-            alert("Vstupujete do hry: " + gameName);
-            // Zde můžete přidat přesměrování nebo jiné funkce
+            mainPage.classList.add("hidden");
+            gameRoom.classList.remove("hidden");
+            messagesDiv.innerHTML = ""; // Vyčistit zprávy
+        }
+
+        function returnToMain() {
+            gameRoom.classList.add("hidden");
+            mainPage.classList.remove("hidden");
         }
 
         function sendMessage() {
