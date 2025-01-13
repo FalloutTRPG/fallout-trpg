@@ -185,8 +185,8 @@
 
         // Funkce pro vstup do místnosti
         function enterMistnost(mistnostNazev) {
-            rozcestnik.classList.add("hidden");
-            mistnost.classList.remove("hidden");
+            rozcestnik.classList.add("hidden"); // Skryj rozcestník
+            mistnost.classList.remove("hidden"); // Zobraz místnost
 
             // Nastavíme obrázek a popis místnosti
             obrazekMistnosti.src = mistnosti[mistnostNazev].obrazek;
@@ -195,15 +195,15 @@
 
         // Funkce pro návrat na rozcestník
         function returnToRozcestnik() {
-            mistnost.classList.add("hidden");
-            hra.classList.add("hidden");
-            rozcestnik.classList.remove("hidden");
+            mistnost.classList.add("hidden"); // Skryj místnost
+            hra.classList.add("hidden"); // Skryj hru
+            rozcestnik.classList.remove("hidden"); // Zobraz rozcestník
         }
 
         // Funkce pro návrat do místnosti
         function returnToMistnost() {
-            hra.classList.add("hidden");
-            mistnost.classList.remove("hidden");
+            hra.classList.add("hidden"); // Skryj hru
+            mistnost.classList.remove("hidden"); // Zobraz místnost
         }
 
         // Funkce pro vytvoření nové hry
@@ -222,8 +222,8 @@
 
         // Funkce pro vstup do hry
         function enterHra(nazevHry) {
-            mistnost.classList.add("hidden");
-            hra.classList.remove("hidden");
+            mistnost.classList.add("hidden"); // Skryj místnost
+            hra.classList.remove("hidden"); // Zobraz hru
             zpravyDiv.innerHTML = ""; // Vyčistit zprávy
         }
 
