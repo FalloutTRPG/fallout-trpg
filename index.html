@@ -23,52 +23,23 @@
         .content {
             width: 80%;
             float: left;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
             padding: 10px;
             box-sizing: border-box;
-            height: calc(100vh - 100px);
-            overflow-y: auto;
-        }
-        .menu a {
-            color: #00ee00;
-            text-decoration: none;
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #00ee00;
-            text-align: center;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .menu a:hover {
-            background-color: #00ee00;
-            color: #000000;
-        }
-        .hidden {
-            display: none;
-        }
-        .message {
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #00ee00;
-            border-radius: 5px;
-            text-align: justify;
-        }
-        .message strong {
-            display: block;
-            margin-bottom: 5px;
+            border-bottom: 1px solid #00ee00;
         }
         .input-area {
-            position: fixed;
-            bottom: 0;
-            left: 20%;
-            width: 80%;
-            background-color: #000000;
-            border-top: 1px solid #00ee00;
             padding: 10px;
+            background-color: #000000;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
             gap: 10px;
         }
         .input-area input, .input-area textarea, .input-area button {
@@ -86,6 +57,18 @@
         .input-area input:focus, .input-area textarea:focus, .input-area button:focus {
             outline: none;
             border-color: #00ff00;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #00ee00;
+            border-radius: 5px;
+            text-align: justify;
+            white-space: pre-wrap; /* Zachová formátování odstavců */
+        }
+        .message strong {
+            display: block;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -108,13 +91,13 @@
             <a href="#" onclick="returnToMain()">Zpět</a>
         </div>
         <div class="content">
-            <div id="messages"></div>
-        </div>
-        <div class="input-area">
-            <input type="text" id="username" placeholder="Zadejte jméno postavy">
-            <textarea id="message" placeholder="Napište zprávu..."></textarea>
-            <button onclick="sendMessage()">Odeslat</button>
-            <button onclick="summonAI()">Přizvat AI vypravěče</button>
+            <div class="messages-container" id="messages"></div>
+            <div class="input-area">
+                <input type="text" id="username" placeholder="Zadejte jméno postavy">
+                <textarea id="message" placeholder="Napište zprávu..."></textarea>
+                <button onclick="sendMessage()">Odeslat</button>
+                <button onclick="summonAI()">Přizvat AI vypravěče</button>
+            </div>
         </div>
     </div>
     <script>
@@ -168,6 +151,7 @@
             messagesDiv.appendChild(messageDiv);
 
             messageInput.value = ""; // Vyčistit pole pro zprávu
+            messagesDiv.scrollTop = messagesDiv.scrollHeight; // Posunout scroll dolů
         }
 
         function summonAI() {
