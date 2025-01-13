@@ -99,143 +99,143 @@
     </style>
 </head>
 <body>
-    <!-- Úvodní stránka (rozcestník) -->
-    <div id="intro-page" class="intro-page">
+    <!-- Rozcestník -->
+    <div id="rozcestnik" class="intro-page">
         <div>
             <h1>Fallout Textová Hra</h1>
-            <a href="#" onclick="enterLocation('les')">Les</a>
-            <a href="#" onclick="enterLocation('mesto')">Město</a>
-            <a href="#" onclick="enterLocation('poušť')">Poušť</a>
+            <a href="#" onclick="enterMistnost('les')">Les</a>
+            <a href="#" onclick="enterMistnost('mesto')">Město</a>
+            <a href="#" onclick="enterMistnost('poušť')">Poušť</a>
         </div>
     </div>
 
-    <!-- Stránka místa -->
-    <div id="location-page" class="hidden">
+    <!-- Místnost -->
+    <div id="mistnost" class="hidden">
         <div class="menu">
-            <a href="#" onclick="returnToIntro()">Zpět</a>
-            <a href="#" onclick="createNewGame()">Vytvořit novou hru</a>
-            <div id="game-list">
+            <a href="#" onclick="returnToRozcestnik()">Zpět</a>
+            <a href="#" onclick="createHra()">Vytvořit novou hru</a>
+            <div id="seznam-her">
                 <p>Momentálně nejsou k dispozici žádné hry.</p>
             </div>
         </div>
         <div class="content">
-            <img src="" alt="Popis obrázku místnosti" id="location-image" style="width: 100%; height: auto;" />
-            <p id="location-description">Zde bude popis místnosti...</p>
+            <img src="" alt="Popis obrázku místnosti" id="obrazek-mistnosti" style="width: 100%; height: auto;" />
+            <p id="popis-mistnosti">Zde bude popis místnosti...</p>
         </div>
     </div>
 
-    <!-- Herní místnost -->
-    <div id="game-room" class="hidden">
+    <!-- Hra -->
+    <div id="hra" class="hidden">
         <div class="menu">
-            <a href="#" onclick="returnToLocation()">Zpět</a>
+            <a href="#" onclick="returnToMistnost()">Zpět</a>
         </div>
         <div class="content">
-            <div id="messages"></div>
+            <div id="zpravy"></div>
         </div>
         <div class="input-area">
-            <input type="text" id="username" placeholder="Zadejte jméno postavy">
-            <textarea id="message" placeholder="Napište, co vaše postava dělá..."></textarea>
-            <button onclick="sendMessage()">Odeslat</button>
+            <input type="text" id="jmeno-postavy" placeholder="Zadejte jméno postavy">
+            <textarea id="zprava" placeholder="Napište, co vaše postava dělá..."></textarea>
+            <button onclick="odeslatZpravu()">Odeslat</button>
         </div>
     </div>
 
     <script>
-        const introPage = document.getElementById("intro-page");
-        const locationPage = document.getElementById("location-page");
-        const gameRoom = document.getElementById("game-room");
-        const messagesDiv = document.getElementById("messages");
-        const usernameInput = document.getElementById("username");
-        const messageInput = document.getElementById("message");
-        const locationImage = document.getElementById("location-image");
-        const locationDescription = document.getElementById("location-description");
+        const rozcestnik = document.getElementById("rozcestnik");
+        const mistnost = document.getElementById("mistnost");
+        const hra = document.getElementById("hra");
+        const zpravyDiv = document.getElementById("zpravy");
+        const jmenoPostavyInput = document.getElementById("jmeno-postavy");
+        const zpravaInput = document.getElementById("zprava");
+        const obrazekMistnosti = document.getElementById("obrazek-mistnosti");
+        const popisMistnosti = document.getElementById("popis-mistnosti");
 
         // Data pro jednotlivá místa
-        const locations = {
+        const mistnosti = {
             les: {
-                image: "https://via.placeholder.com/800x400?text=Les",
-                description: "Temný a tajuplný les plný nebezpečí a překvapení."
+                obrazek: "https://via.placeholder.com/800x400?text=Les",
+                popis: "Temný a tajuplný les plný nebezpečí a překvapení."
             },
             mesto: {
-                image: "https://via.placeholder.com/800x400?text=Město",
-                description: "Rozpadlé město plné ruin a přeživších."
+                obrazek: "https://via.placeholder.com/800x400?text=Město",
+                popis: "Rozpadlé město plné ruin a přeživších."
             },
             poušť: {
-                image: "https://via.placeholder.com/800x400?text=Poušť",
-                description: "Vyprahlá poušť, kde přežijí jen ti nejsilnější."
+                obrazek: "https://via.placeholder.com/800x400?text=Poušť",
+                popis: "Vyprahlá poušť, kde přežijí jen ti nejsilnější."
             }
         };
 
         // Seznam her (zatím pouze v paměti prohlížeče)
-        let games = [];
+        let hry = [];
 
-        // Funkce pro vstup do místa
-        function enterLocation(location) {
-            introPage.classList.add("hidden");
-            locationPage.classList.remove("hidden");
+        // Funkce pro vstup do místnosti
+        function enterMistnost(mistnostNazev) {
+            rozcestnik.classList.add("hidden");
+            mistnost.classList.remove("hidden");
 
-            // Nastavíme obrázek a popis místa
-            locationImage.src = locations[location].image;
-            locationDescription.textContent = locations[location].description;
+            // Nastavíme obrázek a popis místnosti
+            obrazekMistnosti.src = mistnosti[mistnostNazev].obrazek;
+            popisMistnosti.textContent = mistnosti[mistnostNazev].popis;
         }
 
-        // Funkce pro návrat na úvodní stránku
-        function returnToIntro() {
-            locationPage.classList.add("hidden");
-            gameRoom.classList.add("hidden");
-            introPage.classList.remove("hidden");
+        // Funkce pro návrat na rozcestník
+        function returnToRozcestnik() {
+            mistnost.classList.add("hidden");
+            hra.classList.add("hidden");
+            rozcestnik.classList.remove("hidden");
         }
 
-        // Funkce pro návrat na stránku místa
-        function returnToLocation() {
-            gameRoom.classList.add("hidden");
-            locationPage.classList.remove("hidden");
+        // Funkce pro návrat do místnosti
+        function returnToMistnost() {
+            hra.classList.add("hidden");
+            mistnost.classList.remove("hidden");
         }
 
         // Funkce pro vytvoření nové hry
-        function createNewGame() {
-            const gameName = prompt("Zadejte název nové hry:");
-            if (gameName) {
-                games.push(gameName); // Přidá hru do seznamu
-                const gameList = document.getElementById("game-list");
-                const newGame = document.createElement("a");
-                newGame.textContent = gameName;
-                newGame.href = "#";
-                newGame.onclick = () => enterGame(gameName);
-                gameList.appendChild(newGame);
+        function createHra() {
+            const nazevHry = prompt("Zadejte název nové hry:");
+            if (nazevHry) {
+                hry.push(nazevHry); // Přidá hru do seznamu
+                const seznamHer = document.getElementById("seznam-her");
+                const novaHra = document.createElement("a");
+                novaHra.textContent = nazevHry;
+                novaHra.href = "#";
+                novaHra.onclick = () => enterHra(nazevHry);
+                seznamHer.appendChild(novaHra);
             }
         }
 
         // Funkce pro vstup do hry
-        function enterGame(gameName) {
-            locationPage.classList.add("hidden");
-            gameRoom.classList.remove("hidden");
-            messagesDiv.innerHTML = ""; // Vyčistit zprávy
+        function enterHra(nazevHry) {
+            mistnost.classList.add("hidden");
+            hra.classList.remove("hidden");
+            zpravyDiv.innerHTML = ""; // Vyčistit zprávy
         }
 
         // Funkce pro odeslání zprávy (akce postavy)
-        function sendMessage() {
-            const username = usernameInput.value.trim();
-            const message = messageInput.value.trim();
+        function odeslatZpravu() {
+            const jmenoPostavy = jmenoPostavyInput.value.trim();
+            const zprava = zpravaInput.value.trim();
 
-            if (!username || !message) {
+            if (!jmenoPostavy || !zprava) {
                 alert("Vyplňte jméno postavy i akci!");
                 return;
             }
 
-            const messageDiv = document.createElement("div");
-            messageDiv.className = "message";
-            const messageUser = document.createElement("strong");
-            messageUser.textContent = username;
-            const messageText = document.createElement("p");
+            const zpravaDiv = document.createElement("div");
+            zpravaDiv.className = "message";
+            const zpravaUzivatel = document.createElement("strong");
+            zpravaUzivatel.textContent = jmenoPostavy;
+            const zpravaText = document.createElement("p");
 
             // Nahradíme nové řádky za <br> a zachováme formátování
-            messageText.innerHTML = message.replace(/\n/g, "<br>");
+            zpravaText.innerHTML = zprava.replace(/\n/g, "<br>");
 
-            messageDiv.appendChild(messageUser);
-            messageDiv.appendChild(messageText);
-            messagesDiv.appendChild(messageDiv);
+            zpravaDiv.appendChild(zpravaUzivatel);
+            zpravaDiv.appendChild(zpravaText);
+            zpravyDiv.appendChild(zpravaDiv);
 
-            messageInput.value = ""; // Vyčistit pole pro zprávu
+            zpravaInput.value = ""; // Vyčistit pole pro zprávu
         }
     </script>
 </body>
