@@ -89,18 +89,32 @@
             outline: none;
             border-color: #00ff00;
         }
-        .intro-page {
+        .rozcestnik {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             text-align: center;
         }
+        .rozcestnik a {
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #00ee00;
+            color: #000000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .rozcestnik a:hover {
+            background-color: #00cc00;
+        }
     </style>
 </head>
 <body>
     <!-- Rozcestník -->
-    <div id="rozcestnik" class="intro-page">
+    <div id="rozcestnik" class="rozcestnik">
         <div>
             <h1>Fallout Textová Hra</h1>
             <a href="#" onclick="enterMistnost('les')">Les</a>
