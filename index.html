@@ -92,6 +92,7 @@
     </style>
 </head>
 <body>
+    <!-- Úvodní stránka -->
     <div id="main-page">
         <div class="menu">
             <h1>Fallout Textová Hra</h1>
@@ -105,6 +106,8 @@
             <p id="room-description">Zde bude popis místnosti...</p>
         </div>
     </div>
+
+    <!-- Herní místnost -->
     <div id="game-room" class="hidden">
         <div class="menu">
             <a href="#" onclick="returnToMain()">Zpět</a>
@@ -118,6 +121,7 @@
             <button onclick="sendMessage()">Odeslat</button>
         </div>
     </div>
+
     <script>
         const mainPage = document.getElementById("main-page");
         const gameRoom = document.getElementById("game-room");
@@ -147,7 +151,6 @@
             mainPage.classList.add("hidden");
             gameRoom.classList.remove("hidden");
             messagesDiv.innerHTML = ""; // Vyčistit zprávy
-            document.getElementById("room-description").textContent = `Vítej ve hře: ${gameName}`;
         }
 
         // Funkce pro návrat na hlavní stránku
