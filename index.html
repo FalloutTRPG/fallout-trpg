@@ -185,6 +185,7 @@
         };
 
         let aktualniMistnost = null; // Uchovává aktuální místnost
+        let aktualniHra = null; // Uchovává aktuální hru
 
         // Funkce pro vstup do místnosti
         function enterMistnost(mistnostNazev) {
@@ -211,7 +212,7 @@
             } else {
                 mistnosti[mistnostNazev].hry.forEach((hra) => {
                     const novaHra = document.createElement("a");
-                    novaHra.textContent = hra;
+                    novaHra.textContent = hra.nazev;
                     novaHra.href = "#";
                     novaHra.onclick = () => enterHra(hra);
                     seznamHer.appendChild(novaHra);
@@ -236,16 +237,37 @@
         function createHra() {
             const nazevHry = prompt("Zadejte název nové hry:");
             if (nazevHry) {
-                mistnosti[aktualniMistnost].hry.push(nazevHry); // Přidá hru do seznamu pro aktuální místnost
+                const novaHra = {
+                    nazev: nazevHry,
+                    zpravy: [] // Ukládáme příspěvky pro tuto hru
+                };
+                mistnosti[aktualniMistnost].hry.push(novaHra); // Přidá hru do seznamu pro aktuální místnost
                 zobrazSeznamHer(aktualniMistnost); // Aktualizujeme seznam her
             }
         }
 
         // Funkce pro vstup do hry
-        function enterHra(nazevHry) {
+        function enterHra(hraData) {
             mistnost.style.display = "none"; // Skryj místnost
             hra.style.display = "block"; // Zobraz hru
-            zpravyDiv.innerHTML = ""; // Vyčistit zprávy
+            aktualniHra = hraData; // Uložíme aktuální hru
+
+            // Zobrazíme příspěvky pro tuto hru
+            zpravyDiv.innerHTML = "";
+            hraData.zpravy.forEach((zprava) => {
+                const zpravaDiv = document.createElement("div");
+                zpravaDiv.className = "message";
+                const zpravaUzivatel = document.createElement("strong");
+                zpravaUzivatel.textContent = zprava.jmenoPostavy;
+                const zpravaText = document.createElement("p");
+                zpravaText.innerHTML = zprava.text.replace(/\n/g, "<br>");
+                zpravaDiv.appendChild(zpravaUzivatel);
+                zpravaDiv.appendChild(zpravaText);
+                zpravyDiv.appendChild(zpravaDiv);
+            });
+
+            // Automaticky scrolluj dolů k poslední zprávě
+            zpravyDiv.scrollTop = zpravyDiv.scrollHeight;
         }
 
         // Funkce pro odeslání zprávy (akce postavy)
@@ -258,15 +280,19 @@
                 return;
             }
 
+            // Uložíme zprávu do aktuální hry
+            aktualniHra.zpravy.push({
+                jmenoPostavy: jmenoPostavy,
+                text: zprava
+            });
+
+            // Zobrazíme zprávu
             const zpravaDiv = document.createElement("div");
             zpravaDiv.className = "message";
             const zpravaUzivatel = document.createElement("strong");
             zpravaUzivatel.textContent = jmenoPostavy;
             const zpravaText = document.createElement("p");
-
-            // Nahradíme nové řádky za <br> a zachováme formátování
             zpravaText.innerHTML = zprava.replace(/\n/g, "<br>");
-
             zpravaDiv.appendChild(zpravaUzivatel);
             zpravaDiv.appendChild(zpravaText);
             zpravyDiv.appendChild(zpravaDiv);
