@@ -12,7 +12,6 @@
             margin: 0;
             padding: 0;
         }
-
         .menu {
             width: 20%;
             float: left;
@@ -21,97 +20,59 @@
             box-sizing: border-box;
             height: 100vh;
         }
-
         .content {
             width: 80%;
             float: left;
             padding: 10px;
             box-sizing: border-box;
         }
-
         .menu a {
             color: #00ee00;
             text-decoration: none;
             display: block;
             margin-bottom: 10px;
-            border: 1px solid #00ee00;
-            padding: 10px;
-            text-align: center;
-            transition: all 0.3s;
         }
-
         .menu a:hover {
-            background-color: #00ee00;
-            color: #000000;
+            text-decoration: underline;
         }
-
         .button {
-            display: inline-block;
-            padding: 10px 20px;
-            border: 1px solid #00ee00;
-            color: #00ee00;
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
             background-color: transparent;
+            color: #00ee00;
+            border: 1px solid #00ee00;
+            text-align: center;
             cursor: pointer;
-            margin-top: 10px;
         }
-
         .button:hover {
             background-color: #00ee00;
             color: #000000;
         }
-
-        .chat {
-            margin-top: 20px;
-            border-top: 1px solid #00ee00;
-            padding-top: 10px;
-        }
-
-        .chat input {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-top: 10px;
-            border: 1px solid #00ee00;
-            background-color: #000000;
-            color: #00ee00;
-            box-sizing: border-box;
-        }
-
-        .chat-messages {
-            margin-top: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-            border: 1px solid #00ee00;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        .chat-messages div {
-            margin-bottom: 10px;
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="menu">
-        <div><strong>Fallout TRPG</strong></div>
-        <a href="#" onclick="createNewGame()">Vytvořit novou hru</a>
+        <h1>Fallout TRPG</h1>
+        <div class="button" onclick="createNewGame()">Vytvořit novou hru</div>
         <div id="game-list">
             <p>Momentálně nejsou k dispozici žádné hry.</p>
         </div>
     </div>
-
     <div class="content">
         <img src="https://via.placeholder.com/800x400" alt="Popis obrázku místnosti" id="room-image" style="width: 100%; height: auto;" />
-        <p id="room-description">Zde bude popis místnosti...</p>
-
-        <div class="chat">
-            <div class="chat-messages" id="chat-messages">
-                <!-- Zde se budou objevovat zprávy -->
+        <p id="room-description">Místnost: <span id="room-name">N/A</span>. Popis: <span id="room-desc">Zde je popis místnosti.</span></p>
+        <div id="chat-section" class="hidden">
+            <div id="chat-messages">
+                <p>Chat zprávy se zobrazí zde...</p>
             </div>
-            <input type="text" id="chat-input" placeholder="Napište zprávu...">
-            <button class="button" onclick="sendMessage()">Odeslat</button>
+            <textarea id="chat-input" placeholder="Napište zprávu..."></textarea>
+            <button onclick="sendMessage()">Odeslat</button>
+            <button onclick="inviteAI()">Přizvat AI vypravěče</button>
         </div>
-
-        <button class="button" onclick="inviteAI()">Přizvat AI vypravěče</button>
     </div>
 
     <script>
@@ -119,25 +80,26 @@
             const gameName = prompt("Zadejte název nové hry:");
             if (gameName) {
                 const gameList = document.getElementById("game-list");
-                const newGame = document.createElement("a");
+                const newGame = document.createElement("div");
                 newGame.textContent = gameName;
-                newGame.href = "#";
+                newGame.className = "button";
                 newGame.onclick = () => enterGame(gameName);
                 gameList.appendChild(newGame);
             }
         }
 
         function enterGame(gameName) {
-            alert("Vstupujete do hry: " + gameName);
-            document.getElementById("room-description").textContent = `Místnost: ${gameName}. Popis: Zde je popis místnosti.`;
+            document.getElementById("room-name").textContent = gameName;
+            document.getElementById("room-desc").textContent = "Popis pro hru: " + gameName;
+            document.getElementById("chat-section").classList.remove("hidden");
         }
 
         function sendMessage() {
             const input = document.getElementById("chat-input");
-            const message = input.value;
-            if (message.trim()) {
+            const message = input.value.trim();
+            if (message) {
                 const chatMessages = document.getElementById("chat-messages");
-                const newMessage = document.createElement("div");
+                const newMessage = document.createElement("p");
                 newMessage.textContent = message;
                 chatMessages.appendChild(newMessage);
                 input.value = "";
@@ -145,7 +107,7 @@
         }
 
         function inviteAI() {
-            alert("Placeholder: AI vypravěč byl přizván. Tuto funkci přidáme později.");
+            alert("AI vypravěč bude přidán později!");
         }
     </script>
 </body>
