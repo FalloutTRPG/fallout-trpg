@@ -13,7 +13,7 @@
             padding: 0;
         }
         .menu {
-            width: 15%;
+            width: 20%;
             float: left;
             border-right: 1px solid #00ee00;
             padding: 10px;
@@ -21,7 +21,7 @@
             height: 100vh;
         }
         .content {
-            width: 85%;
+            width: 80%;
             float: left;
             padding: 10px;
             box-sizing: border-box;
@@ -31,41 +31,35 @@
             text-decoration: none;
             display: block;
             margin: 10px 0;
-        }
-        .button {
-            display: block;
-            margin: 10px 0;
             padding: 10px;
-            background-color: transparent;
-            color: #00ee00;
             border: 1px solid #00ee00;
             text-align: center;
             cursor: pointer;
         }
-        .button:hover {
+        .menu a:hover {
             background-color: #00ee00;
             color: #000000;
         }
-        .chat {
-            margin-top: 20px;
+        #chat-area div {
+            margin-bottom: 15px;
         }
-        .chat input[type="text"] {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #00ee00;
+        .chat-area strong {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 3px;
+            color: #00ee00;
+        }
+        input, button {
             background-color: #000000;
             color: #00ee00;
-            box-sizing: border-box;
-        }
-        .chat button {
-            padding: 10px;
             border: 1px solid #00ee00;
-            background-color: transparent;
-            color: #00ee00;
-            cursor: pointer;
+            padding: 5px;
+            margin: 5px 0;
         }
-        .chat button:hover {
+        input {
+            width: calc(100% - 12px);
+        }
+        button:hover {
             background-color: #00ee00;
             color: #000000;
         }
@@ -74,20 +68,20 @@
 <body>
     <div class="menu">
         <h1>Fallout TRPG</h1>
-        <button class="button" onclick="createNewGame()">Vytvořit novou hru</button>
+        <button onclick="createNewGame()">Vytvořit novou hru</button>
         <div id="game-list">
             <p>Momentálně nejsou k dispozici žádné hry.</p>
         </div>
     </div>
-    <div class="content" id="room-content">
+    <div class="content">
         <img src="https://via.placeholder.com/800x400" alt="Popis obrázku místnosti" id="room-image" style="width: 100%; height: auto;" />
         <p id="room-description">Místnost: N/A. Popis: Zde je popis místnosti.</p>
-        <div class="chat" id="chat-section" style="display: none;">
-            <input type="text" id="character-name" placeholder="Zadejte jméno postavy" />
-            <div id="messages"></div>
+        <div id="chat-controls" style="display: none;">
+            <input type="text" id="player-name" placeholder="Zadejte jméno postavy..." />
+            <div id="chat-area"></div>
             <input type="text" id="message-input" placeholder="Napište zprávu..." />
             <button onclick="sendMessage()">Odeslat</button>
-            <button onclick="inviteAI()">Přizvat AI vypravěče</button>
+            <button onclick="summonAI()">Přizvat AI vypravěče</button>
         </div>
     </div>
 
@@ -96,9 +90,8 @@
             const gameName = prompt("Zadejte název nové hry:");
             if (gameName) {
                 const gameList = document.getElementById("game-list");
-                const newGame = document.createElement("div");
+                const newGame = document.createElement("button");
                 newGame.textContent = gameName;
-                newGame.className = "button";
                 newGame.onclick = () => enterGame(gameName);
                 gameList.appendChild(newGame);
             }
@@ -106,33 +99,34 @@
 
         function enterGame(gameName) {
             document.getElementById("room-description").textContent = `Místnost: ${gameName}. Popis: Tady je popis místnosti.`;
-            document.getElementById("chat-section").style.display = "block";
+            document.getElementById("chat-controls").style.display = "block";
         }
 
         function sendMessage() {
-            const characterName = document.getElementById("character-name").value;
-            const messageInput = document.getElementById("message-input").value;
-            const messages = document.getElementById("messages");
+            const inputField = document.getElementById('message-input');
+            const message = inputField.value.trim();
+            const chatArea = document.getElementById('chat-area');
+            const playerNameInput = document.getElementById('player-name');
+            const playerName = playerNameInput.value.trim() || 'Neznámý hráč';
 
-            if (!characterName) {
-                alert("Prosím, zadejte jméno postavy!");
-                return;
+            if (message) {
+                const messageContainer = document.createElement('div');
+                const playerNameElement = document.createElement('strong');
+                playerNameElement.textContent = playerName + ':';
+                messageContainer.appendChild(playerNameElement);
+
+                const messageText = document.createElement('p');
+                messageText.textContent = message;
+                messageText.style.margin = '5px 0 10px';
+                messageContainer.appendChild(messageText);
+
+                chatArea.appendChild(messageContainer);
+                inputField.value = ''; // Vymazat textové pole
             }
-
-            if (messageInput.trim() === "") {
-                alert("Zpráva nemůže být prázdná!");
-                return;
-            }
-
-            const message = document.createElement("p");
-            message.textContent = `${characterName}: ${messageInput}`;
-            messages.appendChild(message);
-
-            document.getElementById("message-input").value = "";
         }
 
-        function inviteAI() {
-            alert("AI vypravěč je přizván! (Placeholder)");
+        function summonAI() {
+            alert("Funkce přizvání AI vypravěče bude implementována později.");
         }
     </script>
 </body>
