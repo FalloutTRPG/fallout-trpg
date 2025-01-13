@@ -13,7 +13,7 @@
             padding: 0;
         }
         .menu {
-            width: 15%; /* Zúženo menu */
+            width: 15%;
             float: left;
             border-right: 1px solid #00ee00;
             padding: 10px;
@@ -21,7 +21,7 @@
             height: 100vh;
         }
         .content {
-            width: 85%; /* Rozšířeno obsah */
+            width: 85%;
             float: left;
             padding: 10px;
             box-sizing: border-box;
@@ -31,20 +31,11 @@
             text-decoration: none;
             display: block;
             margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #00ee00;
-            text-align: center;
-            background-color: transparent;
-            cursor: pointer;
-        }
-        .menu a:hover {
-            background-color: #00ee00;
-            color: #000000;
         }
         .button {
             display: block;
             margin: 10px 0;
-            padding: 8px; /* Zmenšeno tlačítko */
+            padding: 10px;
             background-color: transparent;
             color: #00ee00;
             border: 1px solid #00ee00;
@@ -52,6 +43,29 @@
             cursor: pointer;
         }
         .button:hover {
+            background-color: #00ee00;
+            color: #000000;
+        }
+        .chat {
+            margin-top: 20px;
+        }
+        .chat input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #00ee00;
+            background-color: #000000;
+            color: #00ee00;
+            box-sizing: border-box;
+        }
+        .chat button {
+            padding: 10px;
+            border: 1px solid #00ee00;
+            background-color: transparent;
+            color: #00ee00;
+            cursor: pointer;
+        }
+        .chat button:hover {
             background-color: #00ee00;
             color: #000000;
         }
@@ -65,10 +79,18 @@
             <p>Momentálně nejsou k dispozici žádné hry.</p>
         </div>
     </div>
-    <div class="content">
+    <div class="content" id="room-content">
         <img src="https://via.placeholder.com/800x400" alt="Popis obrázku místnosti" id="room-image" style="width: 100%; height: auto;" />
         <p id="room-description">Místnost: N/A. Popis: Zde je popis místnosti.</p>
+        <div class="chat" id="chat-section" style="display: none;">
+            <input type="text" id="character-name" placeholder="Zadejte jméno postavy" />
+            <div id="messages"></div>
+            <input type="text" id="message-input" placeholder="Napište zprávu..." />
+            <button onclick="sendMessage()">Odeslat</button>
+            <button onclick="inviteAI()">Přizvat AI vypravěče</button>
+        </div>
     </div>
+
     <script>
         function createNewGame() {
             const gameName = prompt("Zadejte název nové hry:");
@@ -83,8 +105,34 @@
         }
 
         function enterGame(gameName) {
-            alert("Vstupujete do hry: " + gameName);
-            // Přesměrování nebo načtení herní místnosti...
+            document.getElementById("room-description").textContent = `Místnost: ${gameName}. Popis: Tady je popis místnosti.`;
+            document.getElementById("chat-section").style.display = "block";
+        }
+
+        function sendMessage() {
+            const characterName = document.getElementById("character-name").value;
+            const messageInput = document.getElementById("message-input").value;
+            const messages = document.getElementById("messages");
+
+            if (!characterName) {
+                alert("Prosím, zadejte jméno postavy!");
+                return;
+            }
+
+            if (messageInput.trim() === "") {
+                alert("Zpráva nemůže být prázdná!");
+                return;
+            }
+
+            const message = document.createElement("p");
+            message.textContent = `${characterName}: ${messageInput}`;
+            messages.appendChild(message);
+
+            document.getElementById("message-input").value = "";
+        }
+
+        function inviteAI() {
+            alert("AI vypravěč je přizván! (Placeholder)");
         }
     </script>
 </body>
