@@ -11,13 +11,22 @@
             color: #00ee00;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
         .menu {
-            text-align: center;
+            width: 20%;
+            float: left;
+            border-right: 1px solid #00ee00;
+            padding: 10px;
+            box-sizing: border-box;
+            height: 100vh;
+        }
+        .content {
+            width: 80%;
+            float: left;
+            padding: 10px;
+            box-sizing: border-box;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
         }
         .menu a {
             color: #00ee00;
@@ -80,12 +89,19 @@
             outline: none;
             border-color: #00ff00;
         }
+        .intro-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <!-- Úvodní stránka (rozcestník) -->
-    <div id="intro-page">
-        <div class="menu">
+    <div id="intro-page" class="intro-page">
+        <div>
             <h1>Fallout Textová Hra</h1>
             <a href="#" onclick="enterLocation('les')">Les</a>
             <a href="#" onclick="enterLocation('mesto')">Město</a>
@@ -175,7 +191,7 @@
             locationPage.classList.remove("hidden");
         }
 
-        // Funkce pro vytvoření nové hru
+        // Funkce pro vytvoření nové hry
         function createNewGame() {
             const gameName = prompt("Zadejte název nové hry:");
             if (gameName) {
