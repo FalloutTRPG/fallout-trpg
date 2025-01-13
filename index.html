@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fallout TRPG</title>
+    <title>Fallout Textová Hra</title>
     <style>
         body {
             font-family: Futura, sans-serif;
@@ -56,6 +56,7 @@
         .message strong {
             display: block;
             margin-bottom: 5px;
+            color: #00ff00;
         }
         .input-area {
             position: fixed;
@@ -92,7 +93,7 @@
 <body>
     <div id="main-page">
         <div class="menu">
-            <h1>Fallout TRPG</h1>
+            <h1>Fallout Textová Hra</h1>
             <a href="#" onclick="createNewGame()">Vytvořit novou hru</a>
             <div id="game-list">
                 <p>Momentálně nejsou k dispozici žádné hry.</p>
@@ -112,9 +113,8 @@
         </div>
         <div class="input-area">
             <input type="text" id="username" placeholder="Zadejte jméno postavy">
-            <textarea id="message" placeholder="Napište zprávu..."></textarea>
+            <textarea id="message" placeholder="Napište, co vaše postava dělá..."></textarea>
             <button onclick="sendMessage()">Odeslat</button>
-            <button onclick="summonAI()">Přizvat AI vypravěče</button>
         </div>
     </div>
     <script>
@@ -124,9 +124,14 @@
         const usernameInput = document.getElementById("username");
         const messageInput = document.getElementById("message");
 
+        // Seznam her (zatím pouze v paměti prohlížeče)
+        let games = [];
+
+        // Funkce pro vytvoření nové hry
         function createNewGame() {
             const gameName = prompt("Zadejte název nové hry:");
             if (gameName) {
+                games.push(gameName); // Přidá hru do seznamu
                 const gameList = document.getElementById("game-list");
                 const newGame = document.createElement("a");
                 newGame.textContent = gameName;
@@ -136,23 +141,27 @@
             }
         }
 
+        // Funkce pro vstup do hry
         function enterGame(gameName) {
             mainPage.classList.add("hidden");
             gameRoom.classList.remove("hidden");
             messagesDiv.innerHTML = ""; // Vyčistit zprávy
+            document.getElementById("room-description").textContent = `Vítej ve hře: ${gameName}`;
         }
 
+        // Funkce pro návrat na hlavní stránku
         function returnToMain() {
             gameRoom.classList.add("hidden");
             mainPage.classList.remove("hidden");
         }
 
+        // Funkce pro odeslání zprávy (akce postavy)
         function sendMessage() {
             const username = usernameInput.value.trim();
             const message = messageInput.value.trim();
 
             if (!username || !message) {
-                alert("Vyplňte jméno postavy i zprávu!");
+                alert("Vyplňte jméno postavy i akci!");
                 return;
             }
 
@@ -168,10 +177,6 @@
             messagesDiv.appendChild(messageDiv);
 
             messageInput.value = ""; // Vyčistit pole pro zprávu
-        }
-
-        function summonAI() {
-            alert("Funkce AI vypravěče je zatím ve vývoji.");
         }
     </script>
 </body>
