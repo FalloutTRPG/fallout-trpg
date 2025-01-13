@@ -163,25 +163,28 @@
         const zpravaInput = document.getElementById("zprava");
         const obrazekMistnosti = document.getElementById("obrazek-mistnosti");
         const popisMistnosti = document.getElementById("popis-mistnosti");
+        const seznamHer = document.getElementById("seznam-her");
 
         // Data pro jednotlivá místa
         const mistnosti = {
             les: {
                 obrazek: "https://via.placeholder.com/800x400?text=Les",
-                popis: "Temný a tajuplný les plný nebezpečí a překvapení."
+                popis: "Temný a tajuplný les plný nebezpečí a překvapení.",
+                hry: [] // Seznam her pro tuto místnost
             },
             mesto: {
                 obrazek: "https://via.placeholder.com/800x400?text=Město",
-                popis: "Rozpadlé město plné ruin a přeživších."
+                popis: "Rozpadlé město plné ruin a přeživších.",
+                hry: [] // Seznam her pro tuto místnost
             },
             poušť: {
                 obrazek: "https://via.placeholder.com/800x400?text=Poušť",
-                popis: "Vyprahlá poušť, kde přežijí jen ti nejsilnější."
+                popis: "Vyprahlá poušť, kde přežijí jen ti nejsilnější.",
+                hry: [] // Seznam her pro tuto místnost
             }
         };
 
-        // Seznam her (zatím pouze v paměti prohlížeče)
-        let hry = [];
+        let aktualniMistnost = null; // Uchovává aktuální místnost
 
         // Funkce pro vstup do místnosti
         function enterMistnost(mistnostNazev) {
@@ -191,6 +194,29 @@
             // Nastavíme obrázek a popis místnosti
             obrazekMistnosti.src = mistnosti[mistnostNazev].obrazek;
             popisMistnosti.textContent = mistnosti[mistnostNazev].popis;
+
+            // Uložíme aktuální místnost
+            aktualniMistnost = mistnostNazev;
+
+            // Zobrazíme seznam her pro tuto místnost
+            zobrazSeznamHer(mistnostNazev);
+        }
+
+        // Funkce pro zobrazení seznamu her
+        function zobrazSeznamHer(mistnostNazev) {
+            seznamHer.innerHTML = ""; // Vyčistíme seznam her
+
+            if (mistnosti[mistnostNazev].hry.length === 0) {
+                seznamHer.innerHTML = "<p>Momentálně nejsou k dispozici žádné hry.</p>";
+            } else {
+                mistnosti[mistnostNazev].hry.forEach((hra) => {
+                    const novaHra = document.createElement("a");
+                    novaHra.textContent = hra;
+                    novaHra.href = "#";
+                    novaHra.onclick = () => enterHra(hra);
+                    seznamHer.appendChild(novaHra);
+                });
+            }
         }
 
         // Funkce pro návrat na rozcestník
@@ -210,13 +236,8 @@
         function createHra() {
             const nazevHry = prompt("Zadejte název nové hry:");
             if (nazevHry) {
-                hry.push(nazevHry); // Přidá hru do seznamu
-                const seznamHer = document.getElementById("seznam-her");
-                const novaHra = document.createElement("a");
-                novaHra.textContent = nazevHry;
-                novaHra.href = "#";
-                novaHra.onclick = () => enterHra(nazevHry);
-                seznamHer.appendChild(novaHra);
+                mistnosti[aktualniMistnost].hry.push(nazevHry); // Přidá hru do seznamu pro aktuální místnost
+                zobrazSeznamHer(aktualniMistnost); // Aktualizujeme seznam her
             }
         }
 
