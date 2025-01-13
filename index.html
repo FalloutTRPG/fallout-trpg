@@ -52,6 +52,7 @@
             border: 1px solid #00ee00;
             border-radius: 5px;
             text-align: justify;
+            white-space: pre-wrap; /* Zachová formátování */
         }
         .message strong {
             display: block;
@@ -170,7 +171,9 @@
             const messageUser = document.createElement("strong");
             messageUser.textContent = username;
             const messageText = document.createElement("p");
-            messageText.textContent = message;
+
+            // Nahradíme nové řádky za <br> a zachováme formátování
+            messageText.innerHTML = message.replace(/\n/g, "<br>");
 
             messageDiv.appendChild(messageUser);
             messageDiv.appendChild(messageText);
