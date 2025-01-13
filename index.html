@@ -11,83 +11,64 @@
             color: #00ee00;
             margin: 0;
             padding: 0;
-            display: flex;
+        }
+        .menu {
+            width: 15%; /* Zúženo menu */
+            float: left;
+            border-right: 1px solid #00ee00;
+            padding: 10px;
+            box-sizing: border-box;
             height: 100vh;
         }
-
-        .menu {
-            width: 25%;
-            border-right: 1px solid #00ee00;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-
         .content {
-            flex: 1;
-            padding: 20px;
+            width: 85%; /* Rozšířeno obsah */
+            float: left;
+            padding: 10px;
             box-sizing: border-box;
         }
-
-        h1 {
-            font-size: 24px;
-            margin: 0 0 20px 0;
+        .menu a {
+            color: #00ee00;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #00ee00;
+            text-align: center;
+            background-color: transparent;
+            cursor: pointer;
         }
-
+        .menu a:hover {
+            background-color: #00ee00;
+            color: #000000;
+        }
         .button {
             display: block;
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
+            margin: 10px 0;
+            padding: 8px; /* Zmenšeno tlačítko */
             background-color: transparent;
             color: #00ee00;
             border: 1px solid #00ee00;
             text-align: center;
             cursor: pointer;
         }
-
         .button:hover {
             background-color: #00ee00;
             color: #000000;
-        }
-
-        a {
-            color: #00ee00;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        #game-list {
-            margin-top: 20px;
-        }
-
-        #room-image {
-            width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        #room-description {
-            font-size: 16px;
         }
     </style>
 </head>
 <body>
     <div class="menu">
         <h1>Fallout TRPG</h1>
-        <div class="button" onclick="createNewGame()">Vytvořit novou hru</div>
+        <button class="button" onclick="createNewGame()">Vytvořit novou hru</button>
         <div id="game-list">
             <p>Momentálně nejsou k dispozici žádné hry.</p>
         </div>
     </div>
     <div class="content">
-        <img src="https://via.placeholder.com/800x400" alt="Popis obrázku místnosti" id="room-image" />
+        <img src="https://via.placeholder.com/800x400" alt="Popis obrázku místnosti" id="room-image" style="width: 100%; height: auto;" />
         <p id="room-description">Místnost: N/A. Popis: Zde je popis místnosti.</p>
     </div>
-
     <script>
         function createNewGame() {
             const gameName = prompt("Zadejte název nové hry:");
